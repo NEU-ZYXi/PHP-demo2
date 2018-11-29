@@ -95,19 +95,22 @@ if (isset($_POST['reg_button'])) {  // isset检测变量是否已设置，$_POST
 		
 		// if username exists, add number after username
 		$i = 0;
+		$username_copy = $username;
 		while (mysqli_num_rows($check_username_query) != 0) {
 			$i++;
-			$username = $username . "_" . $i;
+			$username = $username_copy . "_" . $i;
 			$check_username_query = mysqli_query($con, "SELECT username FROM users WHERE username='$username'");
 		}
 
 		// randomly generate a default profile picture
-		$rand = rand(1, 2);
-		if ($rand == 1) {
-			$profile_pic = "assets/images/profile_pics/defaults/default_profile_head";
-		} else if ($rand == 2) {
-			$profile_pic = "assets/images/profile_pics/defaults/default_profile_head2";
-		}
+		// $rand = rand(1, 2);
+		// if ($rand == 1) {
+		// 	$profile_pic = "assets/images/profile_pics/defaults/default_profile_head";
+		// } else if ($rand == 2) {
+		// 	$profile_pic = "assets/images/profile_pics/defaults/default_profile_head2";
+		// }
+
+		$profile_pic = "assets/images/profile_pics/customized/Pusheen.jpg";
 
 		// submit the form and insert it into database
 		$query = mysqli_query($con, "INSERT INTO users VALUES('', '$fname', '$lname', '$username', '$email', '$password', '$date', '$profile_pic', '0', '0', 'yes', ',')");

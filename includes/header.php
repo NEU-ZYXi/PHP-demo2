@@ -31,7 +31,7 @@ if (isset($_SESSION['username'])) {
  		</div>
 
  		<nav>
- 			<a id="profile_icon" href="#">
+ 			<a id="profile_icon" href="<?php echo $userLoggedIn; ?>">
  				<i class="fas fa-user"></i>
  				<?php echo $user['first_name']; ?>
  			</a>
@@ -52,3 +52,8 @@ if (isset($_SESSION['username'])) {
  			</a>
  		</nav>
  	</div>
+
+ 	<div class="wrapper">
+ 		
+
+
