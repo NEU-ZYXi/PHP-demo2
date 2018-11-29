@@ -10,6 +10,7 @@
 
 body {
 	line-height: 17px;
+	background-color: #E6EAE8;
 }
 
 .top_bar {
@@ -20,6 +21,8 @@ body {
 	border-bottom: 2px solid #01515a;
 	margin: 0 0 10px 0;
 	display: inline-flex;
+	position: fixed;
+	z-index: 10;
 }
 
 .logo a {
@@ -56,6 +59,89 @@ nav a {
 }
 
 
+.wrapper {
+	margin: 0 auto;
+	top: 80px;
+	position: relative;
+	padding: 0 10px;
+	width: 80%;
+	min-width: 950px;
+}
+
+.column {
+	background-color: #fff;
+	padding: 10px;
+	border: 1.5px solid #D3D3D3;
+	border-radius: 5px;
+	box-shadow: 1px 1px 1px #D3D3D3;
+	z-index: -1;
+}
+
+.user_details {
+	width: 350px;
+	float: left;
+	margin-bottom: 20px;
+}
+
+.user_details_left_right {
+	width: 125px;
+	display: inline-block;
+	position: absolute;
+	font-size: 15px;
+	margin-top: 15px;
+}
+
+#profile_name {
+	font-size: 22px;
+}
+
+.user_details img {
+	border-radius: 5px;
+	margin-right: 20px;
+}
+
+.main_column {
+	float: right;
+	width: 900px;
+	z-index: -1;
+	min-height: 160px;
+}
+
+.post_form {
+	width: 100%;
+}
+
+.post_form textarea {
+	width: 80%;
+	height: 60px;
+	border-radius: 5px;
+	margin-right: 32px;
+	border: 1.5px solid #D3D3D3;
+	font-size: 18px;
+	padding: 5px;
+}
+
+textarea:focus {
+	outline: 0;
+}
+
+.post_form input[type="submit"] {
+	width: 8%;
+	height: 40px;
+	border: none;
+	border-radius: 5px;
+	background-color: #04a7cc;
+	font-family: 'Bellota-BoldItalic', sans-serif;
+	color: #fff;
+	font-size: 120%;
+	position: absolute;
+	outline: 0;
+	margin-top: 14px;
+}
+
+.post_form input[type="submit"]:active {
+	padding: 5px 4px 4px 3px;
+}
 
 
 
