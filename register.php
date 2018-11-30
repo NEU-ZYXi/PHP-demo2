@@ -33,7 +33,7 @@ require 'includes/form_handlers/login_handler.php';
 		<div class="login_box">
 			<div class="login_header">
 				<h1>Xi Blog</h1>
-				Login or sign up below
+				Created by Zhenyuan Xi
 			</div>
 
 			<div id="first">
