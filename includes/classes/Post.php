@@ -78,92 +78,132 @@ class Post {
 					continue;
 				}
 
-				if ($num_iterations++ < $start) {
-					continue;
-				}
 
-				// once 10 posts have been loaded, break
-				if ($count > $limit) {
-					break;
-				} else {
-					$count++;
-				}
+				// only show the friends' posts
+				$user_logged_obj = new User($this->con, $userLoggedIn);
+				if ($user_logged_obj->isFriend($added_by)) {
 
-				// fetch the user detail information
-				$user_detail_query = mysqli_query($this->con, "SELECT first_name, last_name, profile_pic FROM users WHERE username='$added_by'");
-				$user_row = mysqli_fetch_array($user_detail_query);
-				$first_name = $user_row['first_name'];
-				$last_name = $user_row['last_name'];
-				$profile_pic = $user_row['profile_pic'];
-
-				// time frame
-				$date_time_now = date("Y-m-d H:i:s");
-				$start_date = new DateTime($date_time);  // time of post
-				$end_date = new DateTIme($date_time_now);  // current time
-				$interval = $start_date->diff($end_date);  // time interval of post
-
-				// set the time format
-				if ($interval->y >= 1) {
-					if ($interval->y == 1) {
-						$time_message = $interval->y . " year ago";  
-					} else {
-						$time_message = $interval->y . " years ago";
-					}
-				} else if ($interval->m >= 1) {
-					if ($interval->d == 0) {
-						$days = " ago";
-					} else if ($interval->d == 1) {
-						$days = $interval->d . " day ago";
-					} else {
-						$days = $interval->d . " days ago";
+					if ($num_iterations++ < $start) {
+						continue;
 					}
 
-					if ($interval->m == 1) {
-						$time_message = $interval->m . " month" . $days;
+					// once 10 posts have been loaded, break
+					if ($count > $limit) {
+						break;
 					} else {
-						$time_message = $interval->m . " months" . $days;
+						$count++;
 					}
-				} else if ($interval->d >= 1) {
-					if ($interval->d == 1) {
-						$time_message = "Yesterday";
-					} else {
-						$time_message = $interval->d . " days ago";
-					}
-				} else if ($interval->h >= 1) {
-					if ($interval->h == 1) {
-						$time_message = $interval->h . " hour ago";
-					} else {
-						$time_message = $interval->h . " hours ago";
-					}
-				} else if ($interval->i >= 1) {
-					if ($interval->i == 1) {
-						$time_message = $interval->i . " minute ago";
-					} else {
-						$time_message = $interval->i . " minutes ago";
-					}
-				} else {
-					if ($interval->s < 30) {
-						$time_message = "Just now";
-					} else {
-						$time_message = $interval->s . " seconds ago";
-					}
-				}
 
-				$str .= "<div class='status_post'>
-							<div class='post_profile_pic'>
-								<img src='$profile_pic' width='50'>
+					// fetch the user detail information
+					$user_detail_query = mysqli_query($this->con, "SELECT first_name, last_name, profile_pic FROM users WHERE username='$added_by'");
+					$user_row = mysqli_fetch_array($user_detail_query);
+					$first_name = $user_row['first_name'];
+					$last_name = $user_row['last_name'];
+					$profile_pic = $user_row['profile_pic'];
+
+					?>
+
+					<script >
+						function toggle<?php echo $id; ?>() {
+
+							var target = $(event.target);
+							if (!target.is("a")) {
+								var element = document.getElementById("toggleComment<?php echo $id; ?>");
+
+						 		if (element.style.display == "block") {
+						 			element.style.display = "none";
+						 		} else {
+						 			element.style.display = "block";
+						 		}
+							}
+					 	}
+					</script>
+
+					<?php
+
+					// check how many comments to show
+					$comments_check = mysqli_query($this->con, "SELECT * FROM comments WHERE post_id='$id'");
+					$comments_check_num = mysqli_num_rows($comments_check);
+
+					// time frame
+					$date_time_now = date("Y-m-d H:i:s");
+					$start_date = new DateTime($date_time);  // time of post
+					$end_date = new DateTIme($date_time_now);  // current time
+					$interval = $start_date->diff($end_date);  // time interval of post
+
+					// set the time format
+					if ($interval->y >= 1) {
+						if ($interval->y == 1) {
+							$time_message = $interval->y . " year ago";  
+						} else {
+							$time_message = $interval->y . " years ago";
+						}
+					} else if ($interval->m >= 1) {
+						if ($interval->d == 0) {
+							$days = " ago";
+						} else if ($interval->d == 1) {
+							$days = $interval->d . " day ago";
+						} else {
+							$days = $interval->d . " days ago";
+						}
+
+						if ($interval->m == 1) {
+							$time_message = $interval->m . " month" . $days;
+						} else {
+							$time_message = $interval->m . " months" . $days;
+						}
+					} else if ($interval->d >= 1) {
+						if ($interval->d == 1) {
+							$time_message = "Yesterday";
+						} else {
+							$time_message = $interval->d . " days ago";
+						}
+					} else if ($interval->h >= 1) {
+						if ($interval->h == 1) {
+							$time_message = $interval->h . " hour ago";
+						} else {
+							$time_message = $interval->h . " hours ago";
+						}
+					} else if ($interval->i >= 1) {
+						if ($interval->i == 1) {
+							$time_message = $interval->i . " minute ago";
+						} else {
+							$time_message = $interval->i . " minutes ago";
+						}
+					} else {
+						if ($interval->s < 30) {
+							$time_message = "Just now";
+						} else {
+							$time_message = $interval->s . " seconds ago";
+						}
+					}
+
+					$str .= "<div class='status_post' onClick='javascript:toggle$id()'>
+								<div class='post_profile_pic'>
+									<img src='$profile_pic' width='50'>
+								</div>
+
+								<div class='posted_by' style='color:#ACACAC;'>
+									<a href='$added_by'> $first_name $last_name </a> $user_to &nbsp;&nbsp;&nbsp;&nbsp; $time_message
+								</div>
+
+								<div id='post_body'> 
+									$body
+									<br> 
+									<br>
+									<br>
+								</div>
+
+								<div class='newsfeedPostOptions'>
+									Comments($comments_check_num)&nbsp;&nbsp;&nbsp;&nbsp;
+								</div>
 							</div>
 
-							<div class='posted_by' style='color:#ACACAC;'>
-								<a href='$added_by'> $first_name $last_name </a> $user_to &nbsp;&nbsp;&nbsp;&nbsp; $time_message
+							<div class='post_comment' id='toggleComment$id' style='display: none;'>
+								<iframe src='comment_frame.php?post_id=$id' id='comment_iframe' frameborder='0'></iframe>
 							</div>
-
-							<div id='post_body'> 
-								$body
-								<br> 
-							</div>
-						</div>
-						<hr>";
+							<hr>";
+				}
 			}
 
 			if ($count > $limit) {
