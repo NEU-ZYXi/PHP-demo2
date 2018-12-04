@@ -1,7 +1,5 @@
 <?php
 include("includes/header.php");
-include("includes/classes/User.php");
-include("includes/classes/Post.php");
 
 // query in the database, specify the connection and write the SQL
 // $query = mysqli_query($con, "INSERT INTO test VALUES('', 'Steven')");

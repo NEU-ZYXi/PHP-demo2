@@ -1,5 +1,7 @@
 <?php 
 require 'config/config.php';
+include("includes/classes/User.php");
+include("includes/classes/Post.php");
 
 // make sure that the user has logged in the go to other pages
 if (isset($_SESSION['username'])) {
@@ -44,7 +46,7 @@ if (isset($_SESSION['username'])) {
  			<a href="#">
  				<i class="fas fa-bell"></i>
  			</a>
- 			<a href="#">
+ 			<a href="request.php">
  				<i class="fas fa-user-friends"></i>
  			</a>
  			<a href="#">

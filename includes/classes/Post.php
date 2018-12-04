@@ -39,6 +39,8 @@ class Post {
 			$num_posts++;
 			$update_query = mysqli_query($this->con, "UPDATE users SET num_posts='$num_posts' WHERE username='$added_by'");
 		}	
+
+		header("Location: index.php");
 	}
 
 	public function loadPostsByFriends($data, $limit) {
@@ -74,7 +76,7 @@ class Post {
 
 				// check if user who posted has their account active
 				$added_by_obj = new User($this->con, $added_by);
-				if ($added_by_obj->isActive()) {
+				if (!$added_by_obj->isActive()) {
 					continue;
 				}
 

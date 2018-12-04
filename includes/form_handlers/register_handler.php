@@ -103,17 +103,13 @@ if (isset($_POST['reg_button'])) {  // isset检测变量是否已设置，$_POST
 		}
 
 		// randomly generate a default profile picture
-		// $rand = rand(1, 2);
-		// if ($rand == 1) {
-		// 	$profile_pic = "assets/images/profile_pics/defaults/default_profile_head";
-		// } else if ($rand == 2) {
-		// 	$profile_pic = "assets/images/profile_pics/defaults/default_profile_head2";
-		// }
+		$rand = rand(1, 6);
+		$profile_pic = "assets/images/profile_pics/customized/Pusheen" . $rand . ".jpeg";
 
-		$profile_pic = "assets/images/profile_pics/customized/Pusheen.jpg";
+		// $profile_pic = "assets/images/profile_pics/customized/Pusheen.jpg";
 
 		// submit the form and insert it into database
-		$query = mysqli_query($con, "INSERT INTO users VALUES('', '$fname', '$lname', '$username', '$email', '$password', '$date', '$profile_pic', '0', '0', 'yes', ',')");
+		$query = mysqli_query($con, "INSERT INTO users VALUES('', '$fname', '$lname', '$username', '$email', '$password', '$date', '$profile_pic', '0', '0', 'yes', NULL)");
 
 		// successful registration message
 		array_push($error_array, "<span style='color: #14C800;'>Successfully registered</span><br>");
