@@ -39,8 +39,6 @@ class Post {
 			$num_posts++;
 			$update_query = mysqli_query($this->con, "UPDATE users SET num_posts='$num_posts' WHERE username='$added_by'");
 		}	
-
-		header("Location: index.php");
 	}
 
 	public function loadPostsByFriends($data, $limit) {
@@ -71,7 +69,7 @@ class Post {
 				} else {
 					$user_to_obj = new User($this->con, $row['user_to']);
 					$user_to_name = $user_to_obj->getFirstAndLastName();
-					$user_to = "<a href='" . $row['user_to'] ."'>" . $user_to_name . "</a>";
+					$user_to = "to <a href='" . $row['user_to'] ."'>" . $user_to_name . "</a>";
 				}
 
 				// check if user who posted has their account active
