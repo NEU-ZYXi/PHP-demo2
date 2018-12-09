@@ -3,6 +3,8 @@ include("includes/header.php");
 
 if (isset($_GET['profile_username'])) {
 	$username = $_GET['profile_username'];
+	$profile_user = new User($con, $username);
+	$profile_user_posts = $profile_user->getNumPosts();
 	$user_details_query = mysqli_query($con, "SELECT * FROM users WHERE username='$username'");
 	$user_array = mysqli_fetch_array($user_details_query);
 
@@ -40,10 +42,21 @@ if (isset($_POST['respond_friend'])) {
 	<div class="profile_left">
 		<img src="<?php echo $user_array['profile_pic']; ?>">
 		<div class="profile_info">
-			<p><?php echo "Posts: " . $user_array['num_posts'] . "<br>"; ?></p>
+			<p><?php echo "Posts: " . $profile_user_posts . "<br>"; ?></p>
 			<p><?php echo "Likes: " . $user_array['num_likes'] . "<br>"; ?></p>
 			<p><?php echo "Friends: " . $num_friends . "<br>"; ?></p>
 		</div>
+
+		<?php 
+
+		if ($userLoggedIn != $username) {
+			$logged_in_user_obj = new User($con, $userLoggedIn);
+			echo '<div class="profile_info_bottom">';
+			echo $logged_in_user_obj->getMutualFriends($username) . " Mutual friends";
+			echo '</div>';
+		}
+
+		 ?>
 
 		<form action="<?php echo $username; ?>" method="POST">
 			<?php 
@@ -77,10 +90,10 @@ if (isset($_POST['respond_friend'])) {
 
 	</div>
 
-	<div class="main_column column">
-		<?php 
-		echo $username . "<br>";
-		 ?>
+	<div class="profile_main_column column">
+		<div class="posts_area"></div>
+		 <!-- show the icon in the AJAX part -->
+		 <img id="loading" src="assets/images/icons/loading.gif"> 
 	</div>	
 
 	<!-- Modal -->
@@ -112,6 +125,57 @@ if (isset($_POST['respond_friend'])) {
 	    </div>
 	  </div>
 	</div>
+
+	<!-- load the posts in the profile page -->
+	<script>
+		var userLoggedIn = '<?php echo $userLoggedIn; ?>';
+		var profileUsername = '<?php echo $username; ?>';
+
+		$(document).ready(function() {
+			$('#loading').show();
+
+			// original AJAX request for loading first posts
+			$.ajax({
+				url: "includes/handlers/ajax_load_profile_posts.php",
+				type: "POST",
+				data: "page=1&userLoggedIn=" + userLoggedIn + "&profileUsername=" + profileUsername, 
+				cache: false,
+
+				success: function(data) {
+					$('#loading').hide();
+					$('.posts_area').html(data);
+				}
+			});
+
+			$(window).scroll(function() {
+				var height = $('.posts_area').height();  // div containing posts
+				var scroll_top = $(this).scrollTop();
+				var page = $('.posts_area').find('.nextPage').val();
+				var noMorePosts = $('.posts_area').find('.noMorePosts').val();
+
+				if ((document.body.scrollHeight <= window.scrollY + window.innerHeight) && noMorePosts == 'false') {
+					$('#loading').show();
+
+					var ajaxReq = $.ajax({
+						url: "includes/handlers/ajax_load_profile_posts.php",
+						type: "POST",
+						data: "page=" + page + "&userLoggedIn=" + userLoggedIn + "&profileUsername=" + profileUsername, 
+						cache: false,
+
+						success: function(response) {
+							$('.posts_area').find('.nextPage').remove();  // remove current next page
+							$('.posts_area').find('.noMorePosts').remove();
+
+							$('#loading').hide();
+							$('.posts_area').append(response);
+						}
+					});
+				}
+
+				return false;
+			});
+		});
+	</script>
 
 </div>
 

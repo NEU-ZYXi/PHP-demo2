@@ -333,3 +333,26 @@ textarea:focus {
 	height: 30px;
 	margin-top: 7px;
 }
+
+.delete_button {
+	height: 22px;
+	width: 22px;
+	padding: 0;
+	float: right;
+	border-radius: 3px;
+	right: -75px;
+	position: relative;
+}
+
+.profile_main_column {
+	min-width: 675px;
+	float: left;
+	width: 65%;
+	z-index: -1;
+	margin-left: 120px;
+	margin-top: -10px;
+}
+
+.profile_info_bottom {
+	margin: -10px 0 20px 50px;
+}

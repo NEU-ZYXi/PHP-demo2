@@ -10,6 +10,9 @@ if (isset($_POST['post'])) {
 	$post->submitPost($_POST['post_text'], 'none');
 }
 
+$current_user = new User($con, $user['username']);
+$current_user_posts = $current_user->getNumPosts();
+
 ?>
 
 	<div class="user_details column">
@@ -24,7 +27,7 @@ if (isset($_POST['post'])) {
 
 			<?php 
 				echo $user['username'] . "<br><br>";
-				echo "Posts: " . $user['num_posts'] . "<br>"; 
+				echo "Posts: " . $current_user_posts . "<br>"; 
 				echo "Likes: " . $user['num_likes'];
 			?>
 		</div>
