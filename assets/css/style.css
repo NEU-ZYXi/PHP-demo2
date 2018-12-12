@@ -111,7 +111,7 @@ nav a {
 	float: right;
 	width: 900px;
 	z-index: -1;
-	min-height: 160px;
+	min-height: 250px;
 }
 
 .post_form {
@@ -402,4 +402,66 @@ textarea:focus {
 	max-height: 400px;
 	overflow: scroll;
 	margin-bottom: 10px;
+}
+
+.loaded_conversations {
+	max-height: 216px;
+	overflow: scroll;
+}
+
+.user_found_message {
+	border-bottom: 1px solid #D3D3D3;
+	padding: 8px 8px 18px 8px;
+}
+
+.user_found_message:hover {
+	background-color: #D3D3D3;
+}
+
+.user_found_message img {
+	height: 45px;
+	width: 45px;
+	float: left;
+}
+
+.timestamp_smaller {
+	float: right;
+}
+
+#grey {
+	color: #8C8C8C;
+}
+
+.resultDisplay {
+	padding: 5px 5px 0 5px;
+	height: 80px;
+	border-bottom: 1px solid #D3D3D3;
+}
+
+.resultDisplay a {
+	float: none;
+}
+
+.resultDisplay:hover {
+	background-color: #EBEBEB;
+}
+
+.liveSearchText {
+	background-color: transparent;
+	color: #04a7cc;
+	font-size: 18px;
+	margin-top: 10px;
+}
+
+.liveSearchText p {
+	margin-left: 10px;
+	font-size: 12px;
+}
+
+.liveSearchProfilePic img {
+	height: 50px;
+	width: 50px;
+	border-radius: 25px;
+	float: left;
+	margin: 2px 15px 0 2px;
 }

@@ -43,10 +43,10 @@ if (isset($_SESSION['username'])) {
  				<i class="fas fa-user"></i>
  				<?php echo $user['first_name']; ?>
  			</a>
- 			<a href="#">
+ 			<a href="index.php">
  				<i class="fas fa-home"></i>
  			</a>
- 			<a href="#">
+ 			<a href="message.php">
  				<i class="fas fa-comments"></i>
  			</a>
  			<a href="#">

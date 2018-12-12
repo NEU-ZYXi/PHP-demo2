@@ -48,8 +48,8 @@ class User {
 	public function isFriend($username_to_check) {
 		$usernameComma = "," . $username_to_check . ",";
 
-		// check if the friend username is in the friend array or it's the own username
-		if ((strstr($this->user['friend_array'], $usernameComma) || $username_to_check == $this->user['username'])) {
+		// check if the friend username is in the friend array
+		if (strstr($this->user['friend_array'], $usernameComma)) {
 			return true;
 		} else {
 			return false;

@@ -80,7 +80,7 @@ class Post {
 
 				// only show the friends' posts
 				$user_logged_obj = new User($this->con, $userLoggedIn);
-				if ($user_logged_obj->isFriend($added_by)) {
+				if ($user_logged_obj->isFriend($added_by) || $added_by == $userLoggedIn) {
 
 					if ($num_iterations++ < $start) {
 						continue;
