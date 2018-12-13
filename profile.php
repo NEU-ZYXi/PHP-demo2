@@ -29,6 +29,23 @@ if (isset($_POST['respond_friend'])) {
 	header("Location: request.php");
 }
 
+$message_obj = new Message($con, $userLoggedIn);
+
+if (isset($_POST['post_message'])) {
+	if (isset($_POST['message_body'])) {
+		$body = mysqli_real_escape_string($con, $_POST['message_body']);
+		$date = date("Y-m-d H:i:s");
+		$message_obj->sendMessage($username, $body, $date);
+	}
+
+	$link = '#profileTabs a[href="#messages_div"]';
+	echo "<script>
+			$(function() {
+				$('". $link . "').tab('show');
+			});
+		</script>";
+}
+
 ?>
 
 	<style type="text/css">
@@ -91,9 +108,47 @@ if (isset($_POST['respond_friend'])) {
 	</div>
 
 	<div class="profile_main_column column">
-		<div class="posts_area"></div>
-		 <!-- show the icon in the AJAX part -->
-		 <img id="loading" src="assets/images/icons/loading.gif"> 
+		<ul class="nav nav-tabs" role="tablist" id="profileTabs">
+		  <li class="nav-item">
+		    <a class="nav-link active" href="#newsfeed_div" aria-controls="newsfeed_div" role="tab" data-toggle="tab">Newsfeed</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" href="#messages_div" aria-controls="messages_div" role="tab" data-toggle="tab">Messages</a>
+		  </li>
+		</ul>
+
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane fade in active" id="newsfeed_div">
+				<div class="posts_area"></div>
+				<!-- show the icon in the AJAX part -->
+				<img id="loading" src="assets/images/icons/loading.gif"> 	
+			</div>
+
+			<div role="tabpanel" class="tab-pane fade" id="messages_div">
+				<?php 
+
+				echo "<h4>You and <a href='" . $username . "'>" . $profile_user->getFirstAndLastName() . "</a></h4><hr>";
+				echo "<div class='loaded_messages' id='scroll_profile_messages'>" . $message_obj->getMessages($username) . "</div>";
+
+				 ?>
+
+				 <div class="message_post">
+				 	<form action="" method="POST">
+			 			<textarea name='message_body' id='message_textarea' placeholder='Write your message'></textarea>
+			 			<input type='submit' name='post_message' class='info' id='message_submit' value='Send'>
+				 	</form>
+				 </div>
+
+				 <script>
+				 	$('a[data-toggle="tab"]').on('shown.bs.tab', function() {
+					 	var div = document.getElementById("scroll_profile_messages");
+					 	if (div != null) {
+					 		div.scrollTop = div.scrollHeight;
+					 	}
+					 });
+				 </script>
+			</div>
+		</div>
 	</div>	
 
 	<!-- Modal -->

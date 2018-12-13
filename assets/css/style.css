@@ -465,3 +465,11 @@ textarea:focus {
 	float: left;
 	margin: 2px 15px 0 2px;
 }
+
+.nav-item {
+	font-size: 18px;
+}
+
+.tab-content {
+	margin-top: 25px;
+}
