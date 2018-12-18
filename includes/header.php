@@ -46,11 +46,11 @@ if (isset($_SESSION['username'])) {
  			<a href="index.php">
  				<i class="fas fa-home"></i>
  			</a>
+ 			<a href="javascript:void(0);" onclick="getDropdownData('<?php echo $userLoggedIn; ?>', 'message')">
+ 				<i class="fas fa-bell"></i>
+ 			</a>
  			<a href="message.php">
  				<i class="fas fa-comments"></i>
- 			</a>
- 			<a href="#">
- 				<i class="fas fa-bell"></i>
  			</a>
  			<a href="request.php">
  				<i class="fas fa-user-friends"></i>
@@ -62,6 +62,9 @@ if (isset($_SESSION['username'])) {
  				<i class="fas fa-sign-out-alt"></i>
  			</a>
  		</nav>
+
+ 		<div class="dropdown_data_window" style="height: 0px;"></div>
+ 		<input type="hidden" id="dropdown_data_type" value="">
  	</div>
 
  	<div class="wrapper">
