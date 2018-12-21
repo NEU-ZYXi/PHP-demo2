@@ -3,6 +3,7 @@ require 'config/config.php';
 include("includes/classes/User.php");
 include("includes/classes/Post.php");
 include("includes/classes/Message.php");
+include("includes/classes/Notification.php");
 
 // make sure that the user has logged in the go to other pages
 if (isset($_SESSION['username'])) {
@@ -43,6 +44,9 @@ if (isset($_SESSION['username'])) {
  			<?php 
  			$messages = new Message($con, $userLoggedIn);  // unread messages
  			$num_messages = $messages->getUnreadNumber();
+
+ 			$notifications = new Notification($con, $userLoggedIn);  // unread notifications
+ 			$num_notifications = $notifications->getUnreadNumber();
  			 ?>
 
  			<a id="profile_icon" href="<?php echo $userLoggedIn; ?>">
@@ -52,16 +56,24 @@ if (isset($_SESSION['username'])) {
  			<a href="index.php">
  				<i class="fas fa-home"></i>
  			</a>
- 			<a href="javascript:void(0);" onclick="getDropdownData('<?php echo $userLoggedIn; ?>', 'message')">
+ 			<a href="javascript:void(0);" onclick="getDropdownData('<?php echo $userLoggedIn; ?>', 'notification')">
  				<i class="fas fa-bell"></i>
  				<?php
+ 				if ($num_notifications >= 1) {
+ 					echo '<span class="notification_badge" id="unread_notifications">' . $num_notifications . '</span>';
+ 				}
+ 				?>
+ 			</a>
+ 			<a href="javascript:void(0);" onclick="getDropdownData('<?php echo $userLoggedIn; ?>', 'message')">
+ 				<i class="fas fa-comments"></i>
+ 				<?php
  				if ($num_messages >= 1) {
- 					echo '<span class="notification_badge" id="unread_number">' . $num_messages . '</span>';
+ 					echo '<span class="notification_badge" id="unread_messages">' . $num_messages . '</span>';
  				}
  				?>
  			</a>
  			<a href="message.php">
- 				<i class="fas fa-comments"></i>
+ 				<i class="fas fa-archive"></i>
  			</a>
  			<a href="request.php">
  				<i class="fas fa-user-friends"></i>
