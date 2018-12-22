@@ -27,20 +27,17 @@ class Notification {
 			case 'like':
 				$message = $userLoggedInName . " liked your post";
 				break;	
-			case 'profile':
+			case 'profile_post':
 				$message = $userLoggedInName . " posted on your porfile";
 				break;
 			case 'comment_non_owner':
 				$message = $userLoggedInName . " commented on a post you commented on";
-				break;
-			case 'comment_profile':
-				$message = $userLoggedInName . " commented on your profile post";
 				break;	
 		}
 
 		$link = "post.php?id=" . $post_id;
 
-		$insert_query = mysqli_query($this->con, "INSERT INTO notifications VALUES('', '$user_to', '$userLoggedIn', '$message', 'link', 'datetime', 'no', 'no')");
+		$insert_query = mysqli_query($this->con, "INSERT INTO notifications VALUES('', '$user_to', '$userLoggedIn', '$message', '$link', '$date_time', 'no', 'no')");
 	}
 }
 
